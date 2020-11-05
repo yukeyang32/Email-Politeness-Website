@@ -1,0 +1,421 @@
+learning disabled
+disabled
+invalid
+birth defect
+suffers from disabilities
+suffering from disabilities
+suffering from a disability
+afflicted with disabilities
+afflicted with a disability
+intellectually disabled people
+intellectually disabled
+has intellectual issues
+suffers from intellectual disabilities
+suffering from intellectual disabilities
+suffering from an intellectual disability
+afflicted with intellectual disabilities
+afflicted with a intellectual disability
+batshit
+psycho
+crazy
+delirious
+insane
+insanity
+loony
+lunacy
+lunatic
+mentally ill
+psychopathology
+mental defective
+moron
+moronic
+nuts
+mental case
+mental
+sane
+sanity check
+bipolar
+schizophrenic
+schizo
+suffers from schizophrenia
+suffering from schizophrenia
+afflicted with schizophrenia
+manic
+handicapped parking
+handicapped
+amputee
+cripple
+crippled
+gimp
+mongoloid
+stroke victim
+suffering from a stroke
+victim of a stroke
+suffers from multiple sclerosis
+suffering from multiple sclerosis
+victim of multiple sclerosis
+multiple sclerosis victim
+afflicted with multiple sclerosis
+suffers from muscular dystrophy
+afflicted with muscular dystrophy
+suffers from MD
+afflicted with MD
+family burden
+asylum
+bedlam
+madhouse
+loony bin
+downs syndrome
+retard
+retarded
+short bus
+retards
+psychotic
+suffers from psychosis
+suffering from psychosis
+afflicted with psychosis
+victim of psychosis
+lame
+suffering from aids
+suffer from aids
+suffers from aids
+afflicted with aids
+victim of aids
+aids victim
+confined to a wheelchair
+bound to a wheelchair
+restricted to a wheelchair
+wheelchair bound
+special olympians
+special olympic athletes
+ablebodied
+addict
+junkie
+addicts
+junkies
+alcoholic
+alcohol abuser
+deaf and dumb
+deafmute
+demented
+senile
+depressed
+vertically challenged
+midget
+small person
+dwarf
+dyslexic
+epileptic
+hearing impaired
+hearing impairment
+infantile paralysis
+suffers from polio
+suffering from polio
+suffering from a polio
+afflicted with polio
+afflicted with a polio
+victim of polio
+suffer from an injury
+suffers from an injury
+suffering from an injury
+afflicted with an injury
+victim of an injury
+suffer from injuries
+suffers from injuries
+suffering from injuries
+afflicted with injuries
+victim of injuries
+paraplegic
+quadriplegic
+spaz
+spastic
+stammering
+stutterer
+tourettes syndrome
+tourettes disorder
+rehab center
+detox center
+rehab
+detox
+sociopath
+sociopaths
+dumb
+simpleton
+stupid
+wacko
+whacko
+low iq
+panic attack
+anorexic
+bony
+neurotic
+ocd
+o.c.d
+o.c.d.
+insomnia
+insomniac
+insomniacs
+barren
+blind to
+blind eye to
+blinded by
+deaf to
+deaf ear to
+deafened by
+cretin
+daft
+feebleminded
+feeble minded
+idiot
+imbecile
+harelipped
+cleftlipped
+harelip
+hare lip
+maniac
+bucktoothed
+buckteeth
+challenged
+diffability
+differently abled
+handicapable
+special
+special needs
+specially abled
+fucktard
+libtard
+contard
+ADD
+adhd
+a.d.d.
+a.d.h.d.
+obvious
+obviously
+just
+basically
+simple
+simply
+easy
+easily
+of course
+clearly
+everyone knows
+frenchmen
+ladylike
+like a man
+maiden name
+maiden voyage
+man enough
+oneupmanship
+miss.
+mrs.
+manmade
+man of action
+man of letters
+man of the world
+fellowship
+freshman
+freshwoman
+workmanship
+housewife
+housewives
+motherly
+manpower
+master of ceremonies
+masterful
+mastermind
+masterpiece
+masterplan
+masterstroke
+madman
+mad man
+madmen
+mad men
+mankind
+manhour
+man hour
+manhours
+man hours
+manned
+unmanned
+bitching
+moaning
+bitch
+moan
+wife beater
+wifebeater
+ancient man
+authoress
+average housewife
+average man
+average working man
+aviatrix
+brotherhood of man
+calendar girl
+call girl
+churchman
+english master
+englishmen
+executrix
+father of \S+
+founding father
+housemaid
+industrial man
+lady doctor
+leading lady
+maiden
+maiden race
+maiden speech
+man a desk
+man in the street
+man of the land
+mans best friend
+man the booth
+man the phones
+mansized task
+man sized task
+master key
+master copy
+master plan
+master the art
+men of science
+midwife
+modern man
+no mans land
+office girls
+poetess
+railwayman
+sportsmanlike
+sportsmanship
+statesmanlike
+statesman like
+stockman
+tradesmans entrance
+tax man
+usherette
+woman lawyer
+woman painter
+working mother
+working wife
+homosexual
+homosexual relations
+homosexual relationship
+homosexual couple
+sexual preference
+gay lifestyle
+homosexual lifestyle
+gay agenda
+homosexual agenda
+special rights
+gay rights
+fag
+faggot
+dyke
+homo
+sodomite
+bi
+homosexual marriage
+tranny
+transvestite
+sexchange
+sex change
+sex change operation
+transgenders
+transgendered
+transgenderism
+biologically male
+born a man
+genetically male
+biologically female
+born a woman
+genetically female
+bathroom bill
+hermaphroditic
+pseudohermaphroditic
+pseudo hermaphroditic
+hermaphrodite
+pseudohermaphrodite
+pseudo hermaphrodite
+shemale
+she male
+heshe
+shehe
+islamist
+islamists
+eskimo
+eskimos
+oriental
+orientals
+nonwhite
+non white
+ghetto
+red indian
+pocahontas
+redskin
+red indians
+redskins
+animal spirit
+dream catcher
+spirit animal
+totem
+long time no hear
+long time no see
+Indian country
+jump the reservation
+off reserve
+off the reservation
+circle the wagons
+on the warpath
+too many chiefs
+natives are restless
+natives are becoming restless
+natives are getting restless
+natives are growing restless
+pow wow
+powwow
+indian give
+indian giver
+pinoys
+pinays
+sand niggers
+towel heads
+latino
+latina
+mexican
+japs
+kike
+goyum
+goy
+shlomo
+spade
+gyppo
+gypsy
+Gipsy
+gyp
+blacklist
+whitelist
+primitive
+savage
+stone age
+tribe
+sophisticated culture
+sophisticated technology
+make \S+ great again
+make \S+ \S+ great again
+make \S+ \S+ \S+ great again
+make \S+ \S+ \S+ \S+ great again
+make \S+ \S+ \S+ \S+ \S+ great again
+committed suicide
+completed suicide
+commit suicide
+complete suicide
+successful suicide
+suicide epidemic
+epidemic of suicides
+suicide pact
+failed suicide
+failed attempt
+suicide failure
+suicide note
+hang
+hanged

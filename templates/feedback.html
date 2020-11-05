@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/interactive.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        $(function() {
+          $('.tooltip').tooltip();
+        });
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1>Input Your Message (User ID: {{ g.user }})</h1>
+    <form method="POST" action="/">
+        <div class="form-container">
+            <div class="form-group">
+                <textarea id="text-input" data-html="true" name="sentence" placeholder="Type your message..."></textarea><br/>
+                <input class="submit-btn" id="submit" type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+    <div class="display-container">
+        <div id='input-container'>
+            <p id="user-input" class="info">
+            {% set count = [0] %}
+            {% if split_inputs|length > 0 %}
+                {% for i in range(split_inputs|length) %}
+                    {% if split_inputs[i].strip('!.,?$:;') in mistakes %}
+                        <mark class="grammar-error tooltip" id={{i}} title='{{ "\n".join(repl[count[0]]) }}'>{{ split_inputs[i] }}</mark>
+                        {% if count.append(count.pop() + 1) %}{% endif %}
+                    {% else %}
+                        <mark class='reg-word'id={{i}}>{{ split_inputs[i] }}</mark>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </p>
+        </div>
+
+        <div id="feedback-container">
+            <h2 class="info-label" id="grammar-label">Spelling/Grammar Feedback</h2>
+            <h3 class="label">We found <strong id="num-errors">{{ num_errors }}</strong> potential grammatical/spelling errors in your message.</h3>
+            <h4>Hover over the <mark class="grammar-error">highlighted areas</mark> for suggested edits.</h4>
+            <h2 class="info-label" id="tone-label">Tone Feedback</h2>
+                <h3 class="label">Your message may sound <mark id="politeness">{{ label_string }}</mark> to a Native English speaker.</h3>
+            {% if label_string == 'impolite' %}
+                <h2 class="info-label" id="strategy-label">Strategies You Have Employed</h2>
+                    {% set relevant_strats = ['HASNEGATIVE','Please start','Direct question','2nd person start'] %}
+                    {% for strat in strategies %}
+                        {% if strat in relevant_strats %}
+                            {% set stratid = strat.replace(' ','-').lower() %}
+                        <ul>
+                            <li class="strategy-item"><a class="strat" id='{{stratid}}' onclick="mark_politeness(this,{{impolite_ind}},{{strategies}})"><strong>{{ strat }}</strong></a></li>
+                        </ul>
+                        {% endif %}
+                    {% endfor %}
+                <div class="strat-suggestions"><p class="strat-info"></p></div>
+                <h4>Click the <mark class="politeness-highlight">strategies</mark> above for suggested edits.</h4>
+            {% endif %}    
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/interactive.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        $(function() {
+          $('.tooltip').tooltip();
+        });
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1>Please Login</h1>
+    <form method="POST" action="">
+        <div class="form-container">
+            <div class="form-group">
+                <input type="text" placeholder="Type your participant ID..." name="userid" style="font-size:15pt;height:55px;width:430px;">
+                <input class="submit-btn" id="submit" type="submit" value="Login">
+            </div>
+        </div>
+    </form>
+{% endblock %}

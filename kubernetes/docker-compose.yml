@@ -1,0 +1,4 @@
+flask:
+    image: gg392/flask-template:v1.5
+    ports:
+      - "5000:5000"
