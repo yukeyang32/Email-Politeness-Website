@@ -1,6 +1,7 @@
 from flask import Flask, Response, make_response, render_template, redirect, url_for, request, session, g
 from flask_socketio import SocketIO, emit
 from flask_mysqldb import MySQL
+from yaml.events import DocumentStartEvent
 from utils import *
 from politeness.features.vectorizer import PolitenessFeatureVectorizer
 from politeness.feedbacks.feedback import get_feedback
@@ -89,7 +90,13 @@ def index():
                 indices VARCHAR(255),
                 FOREIGN KEY (input_id) REFERENCES Input(input_id)
                 )""")
+    label_string = ""
+    input_text = ""
+    title = ""
+    strategies_set = set()
+    strategies = []
     if request.method == 'POST':
+        title = request.form['theme']
         input_text = request.form['sentence']
 
         # check for grammatical mistakes
@@ -118,6 +125,7 @@ def index():
         # Get politeness score for overall document
         doc_res = score_text(input_text)
         print("DOCUMENT POLITENESS:\n", doc_res)
+        label_string = doc_res[0]
 
         # Get politeness score for each sentence in document
         sentence_list = nltk.sent_tokenize(input_text)
@@ -131,7 +139,10 @@ def index():
             ## strategies feedback
             doc = PolitenessFeatureVectorizer.preprocess([sentence])[0]
             strategies = get_feedback(doc)
+            for strat in strategies:
+                strategies_set.add(strat[0])
             sent_politeness_res.append( (sentence, label, impolite_score, polite_score, strategies) )
+        
 
         print("PER SENTENCE POLITENESS\n", sent_politeness_res)
 
@@ -151,7 +162,7 @@ def index():
                 (input_id, m[0], m[1], float(m[2]), float(m[3]), len(m[4]), str(strategies), str(strategies_idx)))
 
         mysql.connection.commit()
-
+        print(strategies)
         # cur.execute("""SELECT * FROM Input""")
         # print(cur.fetchall(), '\n')
         # cur.execute("""SELECT * FROM Feedback_Doc""")
@@ -160,7 +171,7 @@ def index():
         # print(cur.fetchall(), '\n')
         cur.close()
         # return render_template('feedback.html', user_input=input_text, label_string=label_string, impoliteness_score=impoliteness_score, politeness_score=politeness_score, strategies=strategies, grammar_msg=grammar_corrections, repl=replacements, split_inputs=split_input, num_errors=num_corrections, mistakes=wrong_words, impolite_ind=impolite_indices, impolite_words=impolite_words)
-    return render_template('new_feedback.html')
+    return render_template('new_feedback.html',label_string = label_string, user_input = input_text, title = title,strategies_list = strategies_set, strategies = strategies)
 
 
 login = False

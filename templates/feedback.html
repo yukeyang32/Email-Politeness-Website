@@ -62,4 +62,19 @@
             {% endif %}    
         </div>
     </div>
+
+    <script>
+
+        function myFunction() {
+            var change = document.getElementById("toggle");
+            if (change.innerHTML == "on")
+            {
+                change.innerHTML = "off";
+            }
+            else {
+                change.innerHTML = "on";
+            }
+        }
+
+    </script>
 {% endblock %}
