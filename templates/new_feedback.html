@@ -2,16 +2,21 @@
 
 
 {% block head %}
-
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- 
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/static/js/interactive.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
     <script>
         $(function() {
           $('.tooltip').tooltip();
         });
     </script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+        <!-- highlight-within-textarea CSS/JS -->
+	  <link href="/static/js/jquery.highlight-within-textarea.css" rel="stylesheet">
+	  <script src="/static/js/jquery.highlight-within-textarea.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+
 
 {% endblock %}
 
@@ -25,28 +30,54 @@
                 <textarea rows = "1" class="form-control" name="theme" id="formGroupExampleInput" placeholder="Add a title for your email" >{{ title }}</textarea>
               </div>
             <div class="form-group">
-                <textarea rows="28" class="form-control" name="sentence" id="formGroupExampleInput2" placeholder="Type or paste your email here and click Analyze." >{{ user_input }}</textarea>
+              <pre id="view"></pre>
+                <textarea rows="28" class="form-control range-example" name="sentence" id="formGroupExampleInput2" placeholder="Type or paste your email here and click Analyze." >{{ user_input }}</textarea>
             </div>
             {% if user_input|length > 0 %}
-            <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-secondary float-right" style="border-radius: 12px;">Reanalyze</button>
+            <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-secondary float-right" style="border-radius: 12px; background:'grey';">REANALYZE</button>
             {% else %}
-              <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-secondary float-right" style="border-radius: 12px;">Analyze</button>
+              <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-secondary float-right" style="border-radius: 12px; background:'grey';">ANALYZE</button>
             {% endif %}
         </form>
       <!-- Your first column here -->
     </div>
     <div class="col-md-6">
         <div class="col-xs-1 text-center" style="padding-bottom:30px;"><h1><h1>Overall Politeness Estimation</h1></div>
+        {% if label_string == 'polite' %}
+        <div class="col-xs-1" align="left" style="margin-left:180px;">           
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
+        </div>
+        {% elif label_string == 'impolite'%}
+        <div class="col-xs-1" align="right" style="margin-right:200px;">           
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
+        </div>
+        {% else %}
+        <div class="col-xs-1" align="center">           
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
+        </div>
+        {% endif %}
         <div class="flex">
           <h3>Polite</h3>
           <hr class = "politeness"> 
           <h3><span>Impolite</span></h3>
         </div>
         <!-- <hr class = "politeness"> -->
-        <h3 class="label text-center" style="padding-top:25px; padding-bottom:30px;">Your email appears to be <mark id="politeness">{{ label_string }}</mark>.</h3>
+        <h3 class="label text-center" style="padding-top:25px; padding-bottom:30px;">Your email appears to be <mark id="politeness">{{ label_string }}</mark>.
+        {% if label_string == 'impolite' %}
+        Let's make it better!
+        {% elif label_string == 'polite' %}
+        But it can be better.
+        {% endif %}
+        </h3>
         <hr class="solid">
         <h2 class="label text-center" style="padding-top:65px; padding-bottom:95px;">Actionable Feedback</h2> 
-        {% if label_string == 'impolite' %}
+        {% if label_string != 'neutural' %}
         <div id="accordion">
           {% set relevant_strats = ['HASNEGATIVE','Please start','Direct question','2nd person start'] %}
           {% for strat in strategies_list %}
@@ -55,14 +86,14 @@
               <div class="card">
               <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="mark_politeness(this,{{strat}})">
+                  <button class="btn btn-link" onclick="addHighlight()" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     &#9658 {{ strat }}
                   </button>
                 </h5>
               </div>
         
-              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body strat-info">
+              <div id="collapseOne" class="collapse multi-collapse">
+                <div class="card card-body">
                   {% if strat == 'HASNEGATIVE'%}
                   Your message contains words that may be interpreted as hurtful and/or unconstructive. Try rewording your message by removing the negative words.<br/><br/>
             <strong>Example: </strong>If your message is “You are a terrible friend”, where “terrible” is the negative word, you may want to reword it to: “I do not think you have been a good friend lately. Can we talk about it?”
@@ -85,20 +116,57 @@
         <h4 class="label text-center">Type or paste your email and click</h4> 
         <h4 class="label text-center">"Analyze" to view feedback on your writing.</h4>
         {% endif %}
+
       <!-- Your second column here -->
     </div>
   </div>
 
   <script>
 
-    function myFunction() {
-        var change = document.getElementById("toggle");
-        if (change.innerHTML == "Analyze" || change.innerHTML == "Reanalyze")
-        {
-            change.innerHTML = "Analyzing";
-        }
+  function myFunction() {
+    var change = document.getElementById("toggle");
+    if (change.innerHTML == "ANALYZE" || change.innerHTML == "REANALYZE")
+    {
+        change.innerHTML = "ANALYZING...";
+    }
+  }
+
+
+  function addHighlight(){
+    var highlight = "{{highlight_index}}";
+    highlight = highlight.substring(1,highlight.length-1).replaceAll('(','[').replaceAll(')',']');
+    highlight_array = JSON.parse("[" + highlight + "]");
+    $('.range-example').highlightWithinTextarea({
+      highlight: highlight_array
+    });  
+  }
+
+
+  $("input[type='text'], textarea").on("input", function () {    	
+    canChangeColor();
+  });
+
+
+  function canChangeColor(){  
+  	
+    var can = true;  
+
+    $("input[type='text'], textarea").each(function(){
+      if($(this).val()==''){
+          can = false;
+      }
+    });
+  
+    if(can){
+      document.getElementById("toggle").disabled = false;
+      $('.btn').css({background:'blue'})
+    }else{
+      document.getElementById("toggle").disabled = true;
+      $('.btn').css({background:'grey'})
     }
 
-  </script>
+  }
+
+ </script>
 <!-- </div> -->
 {% endblock %}

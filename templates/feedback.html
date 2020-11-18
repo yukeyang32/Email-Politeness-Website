@@ -5,12 +5,13 @@
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/static/js/interactive.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> -->
     <script>
         $(function() {
           $('.tooltip').tooltip();
         });
     </script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block body %}
@@ -63,18 +64,5 @@
         </div>
     </div>
 
-    <script>
-
-        function myFunction() {
-            var change = document.getElementById("toggle");
-            if (change.innerHTML == "on")
-            {
-                change.innerHTML = "off";
-            }
-            else {
-                change.innerHTML = "on";
-            }
-        }
-
-    </script>
+    
 {% endblock %}

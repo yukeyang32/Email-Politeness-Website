@@ -1,0 +1,26 @@
+{
+  "name": "politeness_feedback-master",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "highlight-within-textarea": "^2.0.5",
+    "jquery": "^3.5.1",
+    "jquery-highlighttextarea": "^3.2.1",
+    "jsdom": "^16.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yukeyang32/Email-Politeness-Website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yukeyang32/Email-Politeness-Website/issues"
+  },
+  "homepage": "https://github.com/yukeyang32/Email-Politeness-Website#readme"
+}

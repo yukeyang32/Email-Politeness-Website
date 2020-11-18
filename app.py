@@ -1,6 +1,7 @@
 from flask import Flask, Response, make_response, render_template, redirect, url_for, request, session, g
 from flask_socketio import SocketIO, emit
 from flask_mysqldb import MySQL
+from werkzeug import debug
 from yaml.events import DocumentStartEvent
 from utils import *
 from politeness.features.vectorizer import PolitenessFeatureVectorizer
@@ -94,6 +95,7 @@ def index():
     input_text = ""
     title = ""
     strategies_set = set()
+    highlight_index_set = set()
     strategies = []
     if request.method == 'POST':
         title = request.form['theme']
@@ -141,9 +143,9 @@ def index():
             strategies = get_feedback(doc)
             for strat in strategies:
                 strategies_set.add(strat[0])
+                highlight_index_set.add(strat[1][0])
             sent_politeness_res.append( (sentence, label, impolite_score, polite_score, strategies) )
         
-
         print("PER SENTENCE POLITENESS\n", sent_politeness_res)
 
         now = datetime.datetime.now().strftime("%b %d %Y %H:%M:%S")
@@ -171,7 +173,7 @@ def index():
         # print(cur.fetchall(), '\n')
         cur.close()
         # return render_template('feedback.html', user_input=input_text, label_string=label_string, impoliteness_score=impoliteness_score, politeness_score=politeness_score, strategies=strategies, grammar_msg=grammar_corrections, repl=replacements, split_inputs=split_input, num_errors=num_corrections, mistakes=wrong_words, impolite_ind=impolite_indices, impolite_words=impolite_words)
-    return render_template('new_feedback.html',label_string = label_string, user_input = input_text, title = title,strategies_list = strategies_set, strategies = strategies)
+    return render_template('new_feedback.html',label_string = label_string, user_input = input_text, title = title,strategies_list = strategies_set, strategies = strategies, highlight_index = highlight_index_set)
 
 
 login = False
