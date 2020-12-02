@@ -205,9 +205,9 @@ hr.solid {
 hr.politeness{
   width: 70%;
   margin: 0 auto;
-  background: linear-gradient(to right, red, blue);
+  background: linear-gradient(90deg, #FF6600 0%, #FECA56 47.68%, #FECA56 56.29%, #00A743 100%);
   height: 40px;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
 
@@ -236,7 +236,6 @@ h3 {
   .hwt-content {
     width: 760px;
     height: 100px;
-    padding: 20px;
     border: 1px solid #adb5bd;
     color: inherit;
     font: 18px/25px 'Droid Sans Mono', sans-serif;
