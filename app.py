@@ -9,6 +9,7 @@ from politeness.feedbacks.feedback import get_feedback
 from pylanguagetool import api
 import datetime
 import nltk
+from jinja2 import Template
 
 
 ################################################################################

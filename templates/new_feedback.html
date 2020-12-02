@@ -34,22 +34,22 @@
                 <textarea rows="28" class="form-control range-example" name="sentence" id="formGroupExampleInput2" placeholder="Type or paste your email here and click Analyze." >{{ user_input }}</textarea>
             </div>
             {% if user_input|length > 0 %}
-            <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-secondary float-right" style="border-radius: 12px; background:'grey';">REANALYZE</button>
+            <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="border-radius: 12px; background:'grey';">REANALYZE</button>
             {% else %}
-              <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-secondary float-right" style="border-radius: 12px; background:'grey';">ANALYZE</button>
+              <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="border-radius: 12px; background:'grey';">ANALYZE</button>
             {% endif %}
         </form>
       <!-- Your first column here -->
     </div>
     <div class="col-md-6">
         <div class="col-xs-1 text-center" style="padding-bottom:30px;"><h1><h1>Overall Politeness Estimation</h1></div>
-        {% if label_string == 'polite' %}
+        {% if label_string == 'impolite' %}
         <div class="col-xs-1" align="left" style="margin-left:180px;">           
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
           </svg>
         </div>
-        {% elif label_string == 'impolite'%}
+        {% elif label_string == 'polite'%}
         <div class="col-xs-1" align="right" style="margin-right:200px;">           
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -80,11 +80,21 @@
         {% if label_string != 'neutural' %}
         <div id="accordion">
           {% set relevant_strats = ['HASNEGATIVE','Please start','Direct question','2nd person start'] %}
+          {% set count = {'value': 1} %}
           {% for strat in strategies_list %}
               {% if strat in relevant_strats %}
               {% set stratid = strat.replace(' ','-').lower() %}
               <div class="card">
-              <div class="card-header" id="headingOne">
+              {% if count.value == 1%}
+              <div class="card-header" id="headingOne" style="background: #D8D8D8; border-radius: 4px; margin-bottom: 6px;">
+              {% elif count.value == 2%}
+              <div class="card-header" id="headingOne" style="background: #FBECCB; border-radius: 4px; margin-bottom: 6px;">
+              {% elif count.value == 3%}
+              <div class="card-header" id="headingOne" style="background: #F7D9C4; border-radius: 4px; margin-bottom: 6px;">
+              {% elif count.value == 4%}  
+              <div class="card-header" id="headingOne" style="background: #C8E4DE; border-radius: 4px; margin-bottom: 6px;">
+              {% endif %}        
+              {% if count.update({'value': (count.value + 1)}) %} {% endif %}
                 <h5 class="mb-0">
                   <button class="btn btn-link" onclick="addHighlight()" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     &#9658 {{ strat }}
@@ -135,10 +145,32 @@
   function addHighlight(){
     var highlight = "{{highlight_index}}";
     highlight = highlight.substring(1,highlight.length-1).replaceAll('(','[').replaceAll(')',']');
-    highlight_array = JSON.parse("[" + highlight + "]");
+    var highlight_index_array = highlight.split("],")
+    // console.log(highlight);
+    // console.log(highlight_index_array);
+    var highlight_set = [];
+    var color_set = ['#D8D8D8','#FBECCB','#F7D9C4','#C8E4DE'];
+    for(var i =0;i<highlight_index_array.length;i++){
+      var highlight_extract = highlight_index_array[i];
+      highlight_extract = highlight_extract.replace(/\s/g, "");
+      highlight_extract = highlight_extract.replace('[', "");
+      highlight_extract = highlight_extract.replace(']', "");
+      highlight_array = JSON.parse("[" + highlight_extract + "]");
+      var highlight_obj = new Object();
+      highlight_obj.highlight = highlight_array;
+      highlight_obj.className = color_set[i];
+      highlight_set.push(highlight_obj);
+      // highlight_extract = "{highlight:".concat(highlight_extract).concat(",className:'red'}")
+      // highlight_array = JSON.parse("[" + highlight_extract + "]");
+      // console.log(highlight_array);
+    }
     $('.range-example').highlightWithinTextarea({
-      highlight: highlight_array
-    });  
+    highlight: highlight_set
+});
+    // highlight_array = JSON.parse("[" + highlight + "]");
+    // $('.range-example').highlightWithinTextarea({
+    //   highlight: highlight_array
+    // });  
   }
 
 
@@ -159,10 +191,10 @@
   
     if(can){
       document.getElementById("toggle").disabled = false;
-      $('.btn').css({background:'blue'})
+      $('.btn-analyze').css({background:'blue'})
     }else{
       document.getElementById("toggle").disabled = true;
-      $('.btn').css({background:'grey'})
+      $('.btn-analyze').css({background:'grey'})
     }
 
   }
