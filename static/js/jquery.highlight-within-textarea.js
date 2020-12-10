@@ -338,7 +338,7 @@
 			input = input.replace(/\{\{hwt-mark-start\|(\d+)\}\}/g, function(match, submatch) {
 				var className = boundaries[+submatch].className;
 				if (className) {
-					return '<mark style="background:' + className + '">';
+					return '<mark style="background:' + className.substring(0,7) + '">';
 				} else {
 					return '<mark>';
 				}

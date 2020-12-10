@@ -98,6 +98,7 @@ def index():
     strategies_set = set()
     highlight_index_set = set()
     strategies = []
+    strategies_all = []
     if request.method == 'POST':
         title = request.form['theme']
         input_text = request.form['sentence']
@@ -148,6 +149,9 @@ def index():
             sent_politeness_res.append( (sentence, label, impolite_score, polite_score, strategies) )
         
         print("PER SENTENCE POLITENESS\n", sent_politeness_res)
+        # print(sent_politeness_res[0][4])
+        # print(len(sent_politeness_res[0][4]))
+        strategies_all = sent_politeness_res[0][4]
 
         now = datetime.datetime.now().strftime("%b %d %Y %H:%M:%S")
         cur.execute("INSERT INTO Input (user_id, message, time_stamp) VALUES (%s, %s, %s)", (g.user, input_text, now))
@@ -173,8 +177,9 @@ def index():
         # cur.execute("""SELECT * FROM Feedback_Sentence""")
         # print(cur.fetchall(), '\n')
         cur.close()
+
         # return render_template('feedback.html', user_input=input_text, label_string=label_string, impoliteness_score=impoliteness_score, politeness_score=politeness_score, strategies=strategies, grammar_msg=grammar_corrections, repl=replacements, split_inputs=split_input, num_errors=num_corrections, mistakes=wrong_words, impolite_ind=impolite_indices, impolite_words=impolite_words)
-    return render_template('new_feedback.html',label_string = label_string, user_input = input_text, title = title,strategies_list = strategies_set, strategies = strategies, highlight_index = highlight_index_set)
+    return render_template('new_feedback.html',label_string = label_string, user_input = input_text, title = title,strategies_list = strategies_set, strategies = strategies_all, highlight_index = highlight_index_set)
 
 
 login = False

@@ -34,15 +34,26 @@
                 <textarea rows="28" class="form-control range-example" name="sentence" id="formGroupExampleInput2" placeholder="Type or paste your email here and click Analyze." >{{ user_input }}</textarea>
             </div>
             {% if user_input|length > 0 %}
-            <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="border-radius: 12px; background:'grey';">REANALYZE</button>
+            <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="border-radius: 5px; background:'grey';">REANALYZE</button>
+            <button class="btn btn-analyze btn-link float-left" style="text-decoration:underline; display:inline-block; margin-left: 25px; border-radius: 5px; background:'grey';">FINISH WRITING</button>           
             {% else %}
-              <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="border-radius: 12px; background:'grey';">ANALYZE</button>
+              <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="   text-decoration:underline;
+    display:inline-block;border-radius: 5px; background:'grey';">ANALYZE</button>
             {% endif %}
         </form>
       <!-- Your first column here -->
     </div>
     <div class="col-md-6">
-        <div class="col-xs-1 text-center" style="padding-bottom:30px;"><h1><h1>Overall Politeness Estimation</h1></div>
+      <div class = "text-center" style="align-content: center;">
+        <div class="col-xs-1 text-center" style="padding-bottom:30px; display: inline-block;"><h1><h1>Overall Politeness Estimation</h1></div>
+        <button type="button" class="btn btn-link button-circle" data-toggle="popover" title="Tone Marker" data-placement="bottom" data-content="By analyzing the original email, Tone Marker calculates its politeness and marks the tone to help you better interpret this message. Your conversation is encrypted and will not be shared with any third-party.">?</button>
+      </div>
+        <!-- <div class="help-tip float-right" style = "margin-top:15px;">
+          <h2>Generating Suggestions</h2>
+          <p>Using Cristian Danelescu-Nidilescu-Mizil's politeness API, we scan your text for specific strategies, such as starting sentences with 2nd person, and generate feedback based on the impoliteness strategies you have employed.</p>
+      </div> -->
+
+      <!-- <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Type here.... whatever you want to show there."></i> -->
         {% if label_string == 'impolite' %}
         <div class="col-xs-1" align="left" style="margin-left:180px;">           
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -75,45 +86,55 @@
         But it can be better.
         {% endif %}
         </h3>
+        <!-- {% for strat in strategies %}
+          alert(strat)
+
+        {% endfor %} -->
+
+
+
+
         <hr class="solid">
-        <h2 class="label text-center" style="padding-top:65px; padding-bottom:95px;">Actionable Feedback</h2> 
-        {% if label_string != 'neutural' %}
+        <div class="text-center" style="align-content: center;">
+        <h2 class="label text-center" style="padding-top:45px; padding-bottom:95px; display: inline-block;">Actionable Feedback</h2> 
+        <button type="button" class="btn btn-link" data-toggle="popover" title="Generating Suggestions" id="pop-one" data-placement="bottom" data-content="Using Cristian Danelescu-Nidilescu-Mizil's politeness API, we scan your text for specific strategies, such as starting sentences with 2nd person, and generate feedback based on the impoliteness strategies you have employed.">?</button>
+        </div>
+        {% if label_string != '' %}
         <div id="accordion">
           {% set relevant_strats = ['HASNEGATIVE','Please start','Direct question','2nd person start'] %}
           {% set count = {'value': 1} %}
-          {% for strat in strategies_list %}
-              {% if strat in relevant_strats %}
-              {% set stratid = strat.replace(' ','-').lower() %}
+          {% for strat in strategies %}
+              {% if strat[0] in relevant_strats %}
               <div class="card">
-              {% if count.value == 1%}
-              <div class="card-header" id="headingOne" style="background: #D8D8D8; border-radius: 4px; margin-bottom: 6px;">
-              {% elif count.value == 2%}
+              {% if strat[0] == "HASNEGATIVE" %}
               <div class="card-header" id="headingOne" style="background: #FBECCB; border-radius: 4px; margin-bottom: 6px;">
-              {% elif count.value == 3%}
+              {% elif strat[0] == "Please start"%}
+              <div class="card-header" id="headingOne" style="background: #D8D8D8; border-radius: 4px; margin-bottom: 6px;">
+              {% elif strat[0] == "Direct question"%}
               <div class="card-header" id="headingOne" style="background: #F7D9C4; border-radius: 4px; margin-bottom: 6px;">
-              {% elif count.value == 4%}  
+              {% elif strat[0] == "2nd person start"%}  
               <div class="card-header" id="headingOne" style="background: #C8E4DE; border-radius: 4px; margin-bottom: 6px;">
               {% endif %}        
               {% if count.update({'value': (count.value + 1)}) %} {% endif %}
                 <h5 class="mb-0">
-                  <button class="btn btn-link" onclick="addHighlight()" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    &#9658 {{ strat }}
+                  <button class="btn btn-link" onclick="addHighlight('{{strat[0]}}','{{strat[1]}}')" data-toggle="collapse" data-target="#collapse_{{ count.value }}" aria-expanded="false" aria-controls="collapse_{{ count.value }}">
+                    &#9658 {{ strat[0] }}
                   </button>
                 </h5>
               </div>
         
-              <div id="collapseOne" class="collapse multi-collapse">
+              <div id="collapse_{{ count.value }}" class="collapse multi-collapse">
                 <div class="card card-body">
-                  {% if strat == 'HASNEGATIVE'%}
+                  {% if strat[0] == 'HASNEGATIVE'%}
                   Your message contains words that may be interpreted as hurtful and/or unconstructive. Try rewording your message by removing the negative words.<br/><br/>
             <strong>Example: </strong>If your message is “You are a terrible friend”, where “terrible” is the negative word, you may want to reword it to: “I do not think you have been a good friend lately. Can we talk about it?”
-                  {% elif strat == 'Please start'%}
+                  {% elif strat[0] == 'Please start'%}
                   Your message contains at least one sentence that starts with “please,” which may be interpreted as demanding and/or unconstructive.Try adding a contextual sentence beforehand or changing the sentence into a question, if applicable.<br/><br/>
         <strong>Example: </strong>If your message is “Please complete your part of the project.” You may want to reword it to: “I noticed that you haven’t completed your part of the project yet. Can you please complete it as soon as you can?”
-                  {% elif strat == '2nd person start'%}
+                  {% elif strat[0] == '2nd person start'%}
                   Your message contains at least one sentence that begins in 2nd person. Beginning a sentence with second person can often be interpreted as demanding. Try using “I” statements, providing context before addressing the recipient directly and/or rewording the message into a question, if applicable.<br/><br/>
         <strong>Example: </strong>If your message is “You should call the client.” You may want to reword it to: “I am a bit busy right now; can you call the client instead?”
-                  {% elif strat == 'Direct question'%}  
+                  {% elif strat[0] == 'Direct question'%}  
                   Your message contains at least one sentence that starts with “please,” which may be interpreted as demanding and/or unconstructive. Try adding a contextual sentence beforehand or changing the sentence into a question, if applicable.<br/><br/>
         <strong>Example: </strong>If your message is “Please complete your part of the project.” You may want to reword it to: “I noticed that you haven’t completed your part of the project yet. Can you please complete it as soon as you can?”   
                   {% endif %}
@@ -141,36 +162,118 @@
     }
   }
 
+  var negative_highlight_option = false;
+  var negative_idx = -1;
+  var person2nd_highlight_option = false;
+  var person_idx = -1;
+  var directQuestion_highlight_option = false;
+  var direction_idx = -1;
+  var pleaseStart_highlight_option = false;
+  var please_idx = -1;
+  var highlight_set = [];
 
-  function addHighlight(){
+  function addHighlight(strategy, index){
     var highlight = "{{highlight_index}}";
-    highlight = highlight.substring(1,highlight.length-1).replaceAll('(','[').replaceAll(')',']');
-    var highlight_index_array = highlight.split("],")
-    // console.log(highlight);
-    // console.log(highlight_index_array);
-    var highlight_set = [];
-    var color_set = ['#D8D8D8','#FBECCB','#F7D9C4','#C8E4DE'];
-    for(var i =0;i<highlight_index_array.length;i++){
-      var highlight_extract = highlight_index_array[i];
-      highlight_extract = highlight_extract.replace(/\s/g, "");
-      highlight_extract = highlight_extract.replace('[', "");
-      highlight_extract = highlight_extract.replace(']', "");
-      highlight_array = JSON.parse("[" + highlight_extract + "]");
-      var highlight_obj = new Object();
-      highlight_obj.highlight = highlight_array;
-      highlight_obj.className = color_set[i];
-      highlight_set.push(highlight_obj);
-      // highlight_extract = "{highlight:".concat(highlight_extract).concat(",className:'red'}")
-      // highlight_array = JSON.parse("[" + highlight_extract + "]");
-      // console.log(highlight_array);
+    // alert(strategy);
+    // alert(index);
+    if(strategy == 'HASNEGATIVE'){
+      negative_highlight_option = !negative_highlight_option;
+
+      index = index.substring(1,index.length-1).replaceAll('(','[').replaceAll(')',']');
+      index = index.split("],");
+      if(negative_highlight_option){
+        for(var i =0;i<index.length;i++){
+          highlight_extract = index[i].replace('[', "");
+          highlight_extract = highlight_extract.replace(']', "");
+          highlight_array = JSON.parse("[" + highlight_extract + "]");
+          var highlight_obj = new Object();
+          highlight_obj.className = '#FBECCB';
+          highlight_obj.highlight = highlight_array;
+          negative_idx = highlight_set.length;
+
+          highlight_set.push(highlight_obj);
+
+        }
+      }else{
+        for(var i =0;i<index.length;i++){
+          highlight_set.splice(negative_idx-i,1);
+        }
+        negative_idx = -1;
+      }
+    }else if(strategy == 'Please start'){
+      pleaseStart_highlight_option = !pleaseStart_highlight_option;
+      index = index.substring(1,index.length-1).replaceAll('(','[').replaceAll(')',']');
+      index = index.split("],");
+      if(pleaseStart_highlight_option){
+        for(var i =0;i<index.length;i++){
+          highlight_extract = index[i].replace('[', "");
+          highlight_extract = highlight_extract.replace(']', "");
+          highlight_array = JSON.parse("[" + highlight_extract + "]");
+          var highlight_obj = new Object();
+          highlight_obj.className = '#D8D8D8';
+          highlight_obj.highlight = highlight_array;
+          please_idx = highlight_set.length;
+
+          highlight_set.push(highlight_obj);
+
+        }
+      }else{
+        for(var i =0;i<index.length;i++){
+          highlight_set.splice(please_idx-i,1);
+        }
+        please_idx = -1;
+      }
+    }else if(strategy == 'Direct question'){
+      directQuestion_highlight_option = !directQuestion_highlight_option;
+      index = index.substring(1,index.length-1).replaceAll('(','[').replaceAll(')',']');
+      index = index.split("],");
+      if(directQuestion_highlight_option){
+        for(var i =0;i<index.length;i++){
+          highlight_extract = index[i].replace('[', "");
+          highlight_extract = highlight_extract.replace(']', "");
+          highlight_array = JSON.parse("[" + highlight_extract + "]");
+          var highlight_obj = new Object();
+          highlight_obj.className = '#F7D9C4';
+          highlight_obj.highlight = highlight_array;
+          direction_idx = highlight_set.length;
+
+          highlight_set.push(highlight_obj);
+        }
+      }else{
+        for(var i =0;i<index.length;i++){
+          highlight_set.splice(direction_idx-i,1);
+        }
+        direction_idx = -1;
+      }
+    }else if(strategy == '2nd person start'){
+      person2nd_highlight_option = !person2nd_highlight_option;
+      index = index.substring(1,index.length-1).replaceAll('(','[').replaceAll(')',']');
+      index = index.split("],");
+      if(person2nd_highlight_option){
+        for(var i =0;i<index.length;i++){
+          highlight_extract = index[i].replace('[', "");
+          highlight_extract = highlight_extract.replace(']', "");
+          highlight_array = JSON.parse("[" + highlight_extract + "]");
+          var highlight_obj = new Object();
+          highlight_obj.className = '#C8E4DE';
+          highlight_obj.highlight = highlight_array;
+          person_idx = highlight_set.length;
+
+          highlight_set.push(highlight_obj);
+        }
+      }else{
+        for(var i =0;i<index.length;i++){
+          highlight_set.splice(person_idx-i,1);
+        }
+        person_idx = -1;
+      }
+    }
+    if(!negative_highlight_option && !person2nd_highlight_option && !directQuestion_highlight_option && !pleaseStart_highlight_option){
+      highlight_set = [];
     }
     $('.range-example').highlightWithinTextarea({
-    highlight: highlight_set
-});
-    // highlight_array = JSON.parse("[" + highlight + "]");
-    // $('.range-example').highlightWithinTextarea({
-    //   highlight: highlight_array
-    // });  
+      highlight: highlight_set
+    });  
   }
 
 
@@ -178,7 +281,14 @@
     canChangeColor();
   });
 
-
+  $(function () {
+  $('[data-toggle="popover"]').popover()
+})
+$(function () {
+  $('.example-popover').popover({
+    container: 'body'
+  })
+})
   function canChangeColor(){  
   	
     var can = true;  
@@ -191,13 +301,14 @@
   
     if(can){
       document.getElementById("toggle").disabled = false;
-      $('.btn-analyze').css({background:'blue'})
+      $('.btn-analyze').css({"background": "#4B82FF"})
     }else{
       document.getElementById("toggle").disabled = true;
-      $('.btn-analyze').css({background:'grey'})
+      $('.btn-analyze').css({"background":"grey"})
     }
 
   }
+
 
  </script>
 <!-- </div> -->
