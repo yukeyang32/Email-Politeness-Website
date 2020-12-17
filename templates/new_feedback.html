@@ -2,29 +2,27 @@
 
 
 {% block head %}
-<!-- 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+    <!-- jquery, use this jquery version to enable textarea highlight -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- textarea highlight -->
     <script src="/static/js/interactive.js"></script>
-    <!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
     <script>
         $(function() {
           $('.tooltip').tooltip();
         });
     </script>
-        <!-- highlight-within-textarea CSS/JS -->
 	  <link href="/static/js/jquery.highlight-within-textarea.css" rel="stylesheet">
-	  <script src="/static/js/jquery.highlight-within-textarea.js"></script>
+    <script src="/static/js/jquery.highlight-within-textarea.js"></script>
+    <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
 
 
 {% endblock %}
 
 {% block body %}
-<!-- <div class="container fill">  -->
   <div class="row"  style="height: 100%; max-height: 100%"> 
     <div class="col-md-6 p-3 mb-2 bg-light text-dark">
-        <div class="col-xs-1 text-center" style="padding-bottom:10px;"><h1>Email Politeness Feedback</h1></div>
+        <div class="col-xs-1 text-center" style="padding-bottom:10px; font-family: Roboto; font-style: normal; font-weight: bold; font-size: 20px; line-height: 23px;"><h1>Email Politeness Feedback</h1></div>
         <form method="POST" action="/">
             <div class="form-group">
                 <textarea rows = "1" class="form-control" name="theme" id="formGroupExampleInput" placeholder="Add a title for your email" >{{ title }}</textarea>
@@ -35,25 +33,21 @@
             </div>
             {% if user_input|length > 0 %}
             <button id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="border-radius: 5px; background:'grey';">REANALYZE</button>
-            <button class="btn btn-analyze btn-link float-left" style="text-decoration:underline; display:inline-block; margin-left: 25px; border-radius: 5px; background:'grey';">FINISH WRITING</button>           
+            <a href=finish_writing class="btn btn-analyze btn-link float-left" style="text-decoration:underline; display:inline-block; margin-left: 25px; border-radius: 5px; background:'grey';">FINISH WRITING</a>      
             {% else %}
               <button  id="toggle" onclick="myFunction()" type="submit" class="btn btn-analyze btn-secondary float-right" style="   text-decoration:underline;
     display:inline-block;border-radius: 5px; background:'grey';">ANALYZE</button>
             {% endif %}
         </form>
-      <!-- Your first column here -->
     </div>
     <div class="col-md-6">
       <div class = "text-center" style="align-content: center;">
-        <div class="col-xs-1 text-center" style="padding-bottom:30px; display: inline-block;"><h1><h1>Overall Politeness Estimation</h1></div>
-        <button type="button" class="btn btn-link button-circle" data-toggle="popover" title="Tone Marker" data-placement="bottom" data-content="By analyzing the original email, Tone Marker calculates its politeness and marks the tone to help you better interpret this message. Your conversation is encrypted and will not be shared with any third-party.">?</button>
+        <div class="col-xs-1 text-center" style="padding-bottom:30px; display: inline-block; font-family: Roboto; font-style: normal; font-weight: bold; font-size: 20px; line-height: 23px;"><h1><h1>Overall Politeness Estimation</h1></div>
+        <button type="button" class="btn btn-link" data-toggle="popover" title="Tone Marker" data-placement="bottom" data-content="By analyzing the original email, Tone Marker calculates its politeness and marks the tone to help you better interpret this message. Your conversation is encrypted and will not be shared with any third-party.">?</button>
       </div>
-        <!-- <div class="help-tip float-right" style = "margin-top:15px;">
-          <h2>Generating Suggestions</h2>
-          <p>Using Cristian Danelescu-Nidilescu-Mizil's politeness API, we scan your text for specific strategies, such as starting sentences with 2nd person, and generate feedback based on the impoliteness strategies you have employed.</p>
-      </div> -->
 
-      <!-- <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Type here.... whatever you want to show there."></i> -->
+        <!-- draw the pin whose position is based on classified politeness label -->
+
         {% if label_string == 'impolite' %}
         <div class="col-xs-1" align="left" style="margin-left:180px;">           
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -74,11 +68,14 @@
         </div>
         {% endif %}
         <div class="flex">
-          <h3>Impolite</h3>
+          <h3 style = "font-family: Roboto; font-style: normal; font-weight: bold; font-size: 16px; line-height: 19px;">IMPOLITE</h3>
           <hr class = "politeness"> 
-          <h3><span>Polite</span></h3>
+          <h3 style = "font-family: Roboto; font-style: normal; font-weight: bold; font-size: 16px; line-height: 19px;"><span>POLITE</span></h3>
         </div>
-        <!-- <hr class = "politeness"> -->
+
+
+        <!-- demonstrate different classfied politeness label -->
+
         <h3 class="label text-center" style="padding-top:25px; padding-bottom:30px;">Your email appears to be <mark id="politeness">{{ label_string }}</mark>.
         {% if label_string == 'impolite' %}
         Let's make it better!
@@ -86,19 +83,17 @@
         But it can be better.
         {% endif %}
         </h3>
-        <!-- {% for strat in strategies %}
-          alert(strat)
-
-        {% endfor %} -->
 
 
 
 
         <hr class="solid">
         <div class="text-center" style="align-content: center;">
-        <h2 class="label text-center" style="padding-top:45px; padding-bottom:95px; display: inline-block;">Actionable Feedback</h2> 
+        <h1 class="text-center" style="padding-top:45px; padding-bottom:95px; display: inline-block; font-family: Roboto; font-style: normal; font-size: 35px; line-height: 23px;">Actionable Feedback</h1> 
         <button type="button" class="btn btn-link" data-toggle="popover" title="Generating Suggestions" id="pop-one" data-placement="bottom" data-content="Using Cristian Danelescu-Nidilescu-Mizil's politeness API, we scan your text for specific strategies, such as starting sentences with 2nd person, and generate feedback based on the impoliteness strategies you have employed.">?</button>
         </div>
+
+        <!-- if the strategies returned are among the 4 categories:'HASNEGATIVE','Please start','Direct question','2nd person start', use boostrap collapse to show the corresponding strategy -->
         {% if label_string != '' %}
         <div id="accordion">
           {% set relevant_strats = ['HASNEGATIVE','Please start','Direct question','2nd person start'] %}
@@ -117,10 +112,13 @@
               {% endif %}        
               {% if count.update({'value': (count.value + 1)}) %} {% endif %}
                 <h5 class="mb-0">
-                  <button class="btn btn-link" onclick="addHighlight('{{strat[0]}}','{{strat[1]}}')" data-toggle="collapse" data-target="#collapse_{{ count.value }}" aria-expanded="false" aria-controls="collapse_{{ count.value }}">
-                    &#9658 {{ strat[0] }}
+                  <button class="btn btn-link" style = "float: left;"onclick="addHighlight('{{strat[0]}}','{{strat[1]}}')" data-toggle="collapse" data-target="#collapse_{{ count.value }}" aria-expanded="false" aria-controls="collapse_{{ count.value }}">
+                    &#9658 {{ strat[0] }}                        
                   </button>
                 </h5>
+                <div class="card-body"  style="float: right;">
+                  {{ strat[1]|length }}   
+                </div>
               </div>
         
               <div id="collapse_{{ count.value }}" class="collapse multi-collapse">
@@ -148,12 +146,12 @@
         <h4 class="label text-center">"Analyze" to view feedback on your writing.</h4>
         {% endif %}
 
-      <!-- Your second column here -->
     </div>
   </div>
 
   <script>
 
+  // change button status when user click Analyze/Reanalyze button
   function myFunction() {
     var change = document.getElementById("toggle");
     if (change.innerHTML == "ANALYZE" || change.innerHTML == "REANALYZE")
@@ -162,6 +160,7 @@
     }
   }
 
+  // variable to reset highlight status
   var negative_highlight_option = false;
   var negative_idx = -1;
   var person2nd_highlight_option = false;
@@ -172,10 +171,10 @@
   var please_idx = -1;
   var highlight_set = [];
 
+
+  // Function to add highlight in the textarea
   function addHighlight(strategy, index){
     var highlight = "{{highlight_index}}";
-    // alert(strategy);
-    // alert(index);
     if(strategy == 'HASNEGATIVE'){
       negative_highlight_option = !negative_highlight_option;
 
@@ -276,19 +275,11 @@
     });  
   }
 
-
+  // change button color if the textarea is not empty
   $("input[type='text'], textarea").on("input", function () {    	
     canChangeColor();
   });
 
-  $(function () {
-  $('[data-toggle="popover"]').popover()
-})
-$(function () {
-  $('.example-popover').popover({
-    container: 'body'
-  })
-})
   function canChangeColor(){  
   	
     var can = true;  
@@ -309,7 +300,52 @@ $(function () {
 
   }
 
+  // tooltip popover
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+
+  $(function () {
+    $('.example-popover').popover({
+      container: 'body'
+    })
+  })
+
+
+
+
+
+  // When the window loads, this function will check for classified politeness label and add highlight if applicable.
+  var label = "{{label_string}}";
+  var index = "{{highlight_index|join('!')}}";
+  var strat = "{{ strategies_list|join('!') }}";
+  window.onload = function() {
+    var i = -1;
+    var prevI = 0;
+    var j = -1;
+    var prevJ = 0;
+    if(label!=""){
+      while ((i = strat.indexOf('!', i+1)) != -1 && (j = index.indexOf('!', j+1)) != -1){
+        addHighlight(strat.substring(prevI,i),"["+index.substring(prevJ,j)+"]");
+        console.log(strat.substring(prevI,i));
+        console.log(index.substring(prevJ,j));
+        prevI = i+1;
+        prevJ = j+1;
+      }
+      addHighlight(strat.substring(prevI,strat.length),"["+index.substring(prevJ,index.length)+"]");
+      highlight_set = [];
+      negative_highlight_option = false;
+      negative_idx = -1;
+      person2nd_highlight_option = false;
+      person_idx = -1;
+      directQuestion_highlight_option = false;
+      direction_idx = -1;
+      pleaseStart_highlight_option = false;
+      please_idx = -1;
+    }
+  };
+
+
 
  </script>
-<!-- </div> -->
 {% endblock %}

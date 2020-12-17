@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+<section>
+    <div class="container">
+      <div style ="justify-content:center; margin-top: 60px;" class="row">
+        <div class="col-xs-12 center-block text-center">
+          <h1>Good job! You have made a lot of progress!</h1>
+        </div>
+      </div>
+
+      <div style ="justify-content:center;" class="row">
+        <div class="col-md-6">
+            <h2 class="float-left" style="display: inline;">Original Email</h2>
+            <h3 style="display: inline;">IMPOLITE</h3>
+            <hr style = "margin-top: 23px; width: 50%;" class = "politeness"> 
+            <h3 style="display: inline;" class="float-right">POLITE</h3>
+            <p>{{original}}</p>
+        </div>
+        <div class="col-md-6">
+            <h2 class="float-left">Revised Email</h2>
+            <hr style = "margin-top: 23px; width: 50%;" class = "politeness float-right"> 
+        </div>
+    </div>
+  </section>
+
+{% endblock %}

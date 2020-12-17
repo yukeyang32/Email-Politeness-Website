@@ -33,6 +33,7 @@ app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'politene_ss_test'
 app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
+original_text = ""
 
 socketio = SocketIO(app)
 #################################################################################
@@ -177,10 +178,15 @@ def index():
         # cur.execute("""SELECT * FROM Feedback_Sentence""")
         # print(cur.fetchall(), '\n')
         cur.close()
-
+        original_text = input_text
         # return render_template('feedback.html', user_input=input_text, label_string=label_string, impoliteness_score=impoliteness_score, politeness_score=politeness_score, strategies=strategies, grammar_msg=grammar_corrections, repl=replacements, split_inputs=split_input, num_errors=num_corrections, mistakes=wrong_words, impolite_ind=impolite_indices, impolite_words=impolite_words)
     return render_template('new_feedback.html',label_string = label_string, user_input = input_text, title = title,strategies_list = strategies_set, strategies = strategies_all, highlight_index = highlight_index_set)
 
+
+@app.route('/finish_writing', methods=['GET', 'POST'])
+def finish_writing():
+    print("HHH"+original_text)
+    return render_template('finish_writing.html', original = original_text)
 
 login = False
 if __name__ == '__main__':
